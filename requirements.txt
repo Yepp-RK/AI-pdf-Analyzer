@@ -1,2 +1,3 @@
 pdfminer.six==20221105
-pdfplumber.six==
+streamlit
+pdfplumber
