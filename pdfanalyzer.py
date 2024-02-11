@@ -1,21 +1,25 @@
 import streamlit as st
 import pdfplumber
-from langchain_openai import ChatOpenAI
 import os
+from langchain_openai import ChatOpenAI
 
+# Get the OpenAI API key from Streamlit secrets
+OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 
 st.title("AI PDF Analyzer")
-st.subheader("by YeppRK")
+st.write("by YeppRK")
 
-api_key = os.getenv('OPENAI_API_KEY')
+# Instantiate the fine-tuned model with the OpenAI API key
+fine_tuned_model = ChatOpenAI(
+    api_key=OPENAI_API_KEY,
+    temperature=0.5,
+    model_name="gpt-4-0125-preview"
+)
 
-
-llm = ChatOpenAI(api_key=api_key, temperature=0.5)
 # Streamlit UI
 uploaded_file = st.file_uploader("Choose a PDF document", type="pdf")
 llm_string = st.text_input("Instructions/Question")
 button_clicked = st.button("Process")
-
 
 if button_clicked:
     if uploaded_file is not None and llm_string.strip() != "":
@@ -29,7 +33,7 @@ if button_clicked:
             st.error(f"Error reading PDF file: {e}")
             st.stop()
 
-        # Pass the PDF text and user input to the ChatOpenAI model
+        # Pass the PDF text and user input to the fine-tuned model
         inputs = [
             {
                 "role": "system",
@@ -41,11 +45,10 @@ if button_clicked:
             }
         ]
         try:
-            result = llm.invoke(inputs, config=None)
+            result = fine_tuned_model.invoke(inputs, config=None)
             st.write("Result:")
             st.write(result.content)
         except Exception as e:
-            st.error(f"Error processing with langchain_openai: {e}")
+            st.error(f"Error processing with fine-tuned model: {e}")
     else:
         st.warning("Upload a PDF file and enter instructions before processing.")
-
