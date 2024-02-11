@@ -3,3 +3,4 @@ streamlit
 pdfplumber
 langchain
 langchain-openai
+python-dotenv
