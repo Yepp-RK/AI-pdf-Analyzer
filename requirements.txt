@@ -2,4 +2,4 @@ pdfminer.six==20221105
 streamlit
 pdfplumber
 langchain
-langchain_openai
+langchain-openai
