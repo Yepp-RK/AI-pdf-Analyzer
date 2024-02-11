@@ -2,16 +2,10 @@ import streamlit as st
 import pdfplumber
 from langchain_openai import ChatOpenAI
 import os
-from dotenv import load_dotenv
+
 
 st.title("PDF AI Analyzer")
-
-
-def configure():
-    load_dotenv()
-
-
-configure()  # Call configure to load environment variables
+# Call configure to load environment variables
 
 # Retrieve API key from environment variable
 api_key = os.getenv('OPENAI_API_KEY')
