@@ -2,15 +2,22 @@ import streamlit as st
 import pdfplumber
 from langchain_openai import ChatOpenAI
 import os
-import creds
-
+from dotenv import load_dotenv
 
 st.title("PDF AI Analyzer")
 
-os.environ["OPENAI_API_KEY"] = creds.OPENAI_API_KEY
 
-llm = ChatOpenAI(temperature=0.5)
+def configure():
+    load_dotenv()
 
+
+configure()  # Call configure to load environment variables
+
+# Retrieve API key from environment variable
+api_key = os.getenv('OPENAI_API_KEY')
+
+
+llm = ChatOpenAI(api_key=api_key, temperature=0.5)
 # Streamlit UI
 uploaded_file = st.file_uploader("Choose a PDF document", type="pdf")
 llm_string = st.text_input("Instructions/Question")
