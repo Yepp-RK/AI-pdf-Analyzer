@@ -4,10 +4,9 @@ from langchain_openai import ChatOpenAI
 import os
 
 
-st.title("PDF AI Analyzer")
-# Call configure to load environment variables
+st.title("AI PDF Analyzer")
+st.subheader("by YeppRK")
 
-# Retrieve API key from environment variable
 api_key = os.getenv('OPENAI_API_KEY')
 
 
